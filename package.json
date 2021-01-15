@@ -2,6 +2,9 @@
   "name": "notion-clone-react",
   "version": "0.0.0",
   "private": true,
+  "scripts": {
+    "start": "parcel ./src/index.html"
+  },
   "dependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
