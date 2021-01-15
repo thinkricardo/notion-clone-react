@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "format:check": "prettier --list-different '**'",
+    "format:staged": "pretty-quick --staged",
+    "format:write": "prettier --write '**'",
     "start": "parcel ./src/index.html"
   },
   "dependencies": {
