@@ -1,0 +1,14 @@
+# ignore all files and folders
+*
+
+# reinclude all folders
+!**/
+
+# set files to lint
+!*.css
+!*.scss
+
+# ignore specific folders
+.cache
+dist
+node_modules
