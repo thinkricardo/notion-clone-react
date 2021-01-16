@@ -5,9 +5,13 @@
 !**/
 
 # set files to format
+!*.css
+!*.scss
+
 !*.html
-!*.js
 !*.json
+
+!*.js
 !*.jsx
 !*.ts
 !*.tsx
@@ -15,4 +19,5 @@
 # ignore specific folders
 .cache
 dist
+
 node_modules
