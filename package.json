@@ -8,6 +8,7 @@
     "format:check": "prettier --list-different '**'",
     "format:staged": "pretty-quick --staged",
     "format:write": "prettier --write '**'",
+    "style:lint": "stylelint '**'",
     "start": "parcel ./src/index.html"
   },
   "dependencies": {
