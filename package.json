@@ -1,0 +1,41 @@
+{
+  "name": "notion-clone-react",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "code:check": "tsc --noemit",
+    "code:lint": "eslint '**'",
+    "format:check": "prettier --list-different '**'",
+    "format:staged": "pretty-quick --staged",
+    "format:write": "prettier --write '**'",
+    "style:lint": "stylelint '**'",
+    "start": "parcel ./src/index.html"
+  },
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
+    "eslint": "^7.18.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^4.3.8",
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0",
+    "sass": "^1.32.4",
+    "stylelint": "^13.8.0",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-prettier": "^1.1.2",
+    "typescript": "^4.1.3"
+  }
+}

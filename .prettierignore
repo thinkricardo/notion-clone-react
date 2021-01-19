@@ -1,0 +1,23 @@
+# ignore all files and folders
+*
+
+# reinclude all folders
+!**/
+
+# set files to format
+!*.css
+!*.scss
+
+!*.html
+!*.json
+
+!*.js
+!*.jsx
+!*.ts
+!*.tsx
+
+# ignore specific folders
+.cache
+dist
+
+node_modules
