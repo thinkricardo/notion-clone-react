@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { EditablePage } from './components/editable-page/EditablePage';
+import { EditablePage } from './components/editable-page';
 
 import './App.scss';
 

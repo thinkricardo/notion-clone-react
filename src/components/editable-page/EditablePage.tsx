@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { EditableBlock } from '../editable-block/EditableBlock';
+import { EditableBlock } from '../editable-block';
 
 export const EditablePage: React.FC = () => {
   return (

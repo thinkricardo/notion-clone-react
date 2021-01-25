@@ -1,0 +1,1 @@
+export { EditablePage } from './EditablePage';
