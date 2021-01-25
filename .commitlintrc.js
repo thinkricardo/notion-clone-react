@@ -1,11 +1,10 @@
+const globalScopes = ['app', 'config', 'deps', 'pkg', 'repo', 'style'];
+const appScopes = ['block', 'page'];
+
 module.exports = {
   extends: ['@commitlint/config-conventional'],
   rules: {
     'scope-empty': [2, 'never'],
-    'scope-enum': [
-      2,
-      'always',
-      ['app', 'config', 'deps', 'pkg', 'repo', 'style'],
-    ],
+    'scope-enum': [2, 'always', [...globalScopes, ...appScopes]],
   },
 };
