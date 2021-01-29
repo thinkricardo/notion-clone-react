@@ -1,9 +1,15 @@
 import React, { useRef, useState } from 'react';
 
-export const EditableBlock: React.FC = () => {
+import { Block } from './block';
+
+type EditableBlockProps = {
+  block: Block;
+};
+
+export const EditableBlock: React.FC<EditableBlockProps> = ({ block }) => {
   const elementRef = useRef<HTMLDivElement>(null);
 
-  const [value, setValue] = useState('Type / for commands');
+  const [value, setValue] = useState(block.content);
 
   const handleInput = () => {
     if (!elementRef.current) {
