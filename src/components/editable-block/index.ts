@@ -1,1 +1,1 @@
-export { EditableBlock } from './EditableBlock';
+export { EditableBlock } from './editable-block';
