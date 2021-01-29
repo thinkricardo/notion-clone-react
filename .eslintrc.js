@@ -29,6 +29,10 @@ module.exports = {
           version: 'detect',
         },
       },
+      rules: {
+        // prop-types rule is set to warning until fix is available
+        'react/prop-types': 'warn',
+      },
     },
   ],
 };
