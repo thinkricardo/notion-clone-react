@@ -4,7 +4,7 @@ import { Block } from './block';
 
 type EditableBlockProps = {
   block: Block;
-  onAddBlock: () => void;
+  onAddBlock: (afterBlockId: string) => void;
 };
 
 export const EditableBlock: React.FC<EditableBlockProps> = ({
@@ -26,7 +26,7 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({
   const handleKeyDown = (evt: KeyboardEvent) => {
     if (evt.key === 'Enter') {
       evt.preventDefault();
-      onAddBlock();
+      onAddBlock(block.id);
     }
   };
 

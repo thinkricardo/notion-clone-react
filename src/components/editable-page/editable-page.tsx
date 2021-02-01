@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
 
-import { EditableBlock, InitialBlock } from '../editable-block';
+import { generateId } from '../../utils';
+
+import { Block, EditableBlock, InitialBlock } from '../editable-block';
+
+const initialList: Block[] = [{ ...InitialBlock, id: generateId() }];
 
 export const EditablePage: React.FC = () => {
-  const [blocks, setBlocks] = useState([InitialBlock]);
+  const [blocks, setBlocks] = useState(initialList);
 
-  const handleAddBlock = () => {
-    const newBlocks = blocks.concat([InitialBlock]);
+  const handleAddBlock = (afterBlockId: string) => {
+    const newBlock = { ...InitialBlock, id: generateId() };
+    const blockIndex = blocks.findIndex((block) => block.id === afterBlockId);
+
+    const newBlocks = [...blocks];
+    newBlocks.splice(blockIndex + 1, 0, newBlock);
+
     setBlocks(newBlocks);
   };
 
@@ -14,10 +23,10 @@ export const EditablePage: React.FC = () => {
     <>
       <h2>Page</h2>
 
-      {blocks.map((block, index) => {
+      {blocks.map((block) => {
         return (
           <EditableBlock
-            key={index}
+            key={block.id}
             block={block}
             onAddBlock={handleAddBlock}
           />
