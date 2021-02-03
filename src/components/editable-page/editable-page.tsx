@@ -19,6 +19,17 @@ export const EditablePage: React.FC = () => {
     setBlocks(newBlocks);
   };
 
+  const handleUpdateBlock = (block: Block) => {
+    const blockIndex = blocks.findIndex(
+      (innerBlock) => innerBlock.id === block.id
+    );
+
+    const newBlocks = [...blocks];
+    newBlocks[blockIndex] = { ...block };
+
+    setBlocks(newBlocks);
+  };
+
   return (
     <>
       <h2>Page</h2>
@@ -29,6 +40,7 @@ export const EditablePage: React.FC = () => {
             key={block.id}
             block={block}
             onAddBlock={handleAddBlock}
+            onUpdateBlock={handleUpdateBlock}
           />
         );
       })}
