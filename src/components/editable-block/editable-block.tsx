@@ -5,26 +5,32 @@ import { Block } from './block';
 type EditableBlockProps = {
   block: Block;
   onAddBlock: (afterBlockId: string) => void;
+  onUpdateBlock: (block: Block) => void;
 };
 
 export const EditableBlock: React.FC<EditableBlockProps> = ({
   block,
   onAddBlock,
+  onUpdateBlock,
 }) => {
   const elementRef = useRef<HTMLDivElement>(null);
 
-  const [value, setValue] = useState(block.content);
+  const [value, setValue] = useState(block);
 
   const handleInput = () => {
     if (!elementRef.current) {
       return;
     }
 
-    setValue(elementRef.current.innerText);
+    const newBlock = { ...value };
+    newBlock.content = elementRef.current.innerHTML;
+
+    setValue(newBlock);
+    onUpdateBlock(value);
   };
 
   const handleKeyDown = (evt: KeyboardEvent) => {
-    if (evt.key === 'Enter') {
+    if (evt.key === 'Enter' && !evt.shiftKey) {
       evt.preventDefault();
       onAddBlock(block.id);
     }
@@ -36,8 +42,7 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({
       contentEditable={true}
       onInput={handleInput}
       onKeyDown={handleKeyDown}
-    >
-      {value}
-    </div>
+      dangerouslySetInnerHTML={{ __html: value.content }}
+    ></div>
   );
 };
