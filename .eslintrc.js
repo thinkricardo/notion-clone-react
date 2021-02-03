@@ -6,6 +6,9 @@ module.exports = {
   env: {
     node: true,
   },
+  rules: {
+    'no-console': 'error',
+  },
   overrides: [
     {
       files: ['**/*.{ts,tsx}'],
