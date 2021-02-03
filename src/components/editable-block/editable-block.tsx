@@ -20,7 +20,7 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({
       return;
     }
 
-    setValue(elementRef.current.innerText);
+    setValue(elementRef.current.innerHTML);
   };
 
   const handleKeyDown = (evt: KeyboardEvent) => {
@@ -36,8 +36,7 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({
       contentEditable={true}
       onInput={handleInput}
       onKeyDown={handleKeyDown}
-    >
-      {value}
-    </div>
+      dangerouslySetInnerHTML={{ __html: value }}
+    ></div>
   );
 };
