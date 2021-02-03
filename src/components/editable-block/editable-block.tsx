@@ -24,7 +24,7 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({
   };
 
   const handleKeyDown = (evt: KeyboardEvent) => {
-    if (evt.key === 'Enter') {
+    if (evt.key === 'Enter' && !evt.shiftKey) {
       evt.preventDefault();
       onAddBlock(block.id);
     }
