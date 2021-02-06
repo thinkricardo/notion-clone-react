@@ -1,5 +1,5 @@
 const globalScopes = ['app', 'config', 'deps', 'pkg', 'repo', 'style'];
-const appScopes = ['block', 'page'];
+const appScopes = ['block', 'page', 'store'];
 
 module.exports = {
   extends: ['@commitlint/config-conventional'],
