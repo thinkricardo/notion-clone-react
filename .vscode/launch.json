@@ -5,6 +5,7 @@
       "name": "launch app",
       "type": "chrome",
       "request": "launch",
+      "preLaunchTask": "build app",
       "url": "http://localhost:1234",
       "webRoot": "${workspaceFolder}/src",
       "userDataDir": false
