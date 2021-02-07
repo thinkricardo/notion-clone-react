@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import { store } from '../../core/store';
-import { generateId } from '../../utils';
 
-import { Block, EditableBlock, InitialBlock } from '../editable-block';
+import { Block, EditableBlock } from '../editable-block';
 
 export const EditablePage: React.FC = () => {
   const [blocks, setBlocks] = useState<Block[]>([]);
@@ -14,13 +13,11 @@ export const EditablePage: React.FC = () => {
   }, []);
 
   const handleAddBlock = (afterBlockId: string) => {
-    const newBlock = { ...InitialBlock, id: generateId() };
-    const blockIndex = blocks.findIndex((block) => block.id === afterBlockId);
+    const block = blocks.find((innerBlock) => innerBlock.id === afterBlockId);
 
-    const newBlocks = [...blocks];
-    newBlocks.splice(blockIndex + 1, 0, newBlock);
-
-    setBlocks(newBlocks);
+    if (block) {
+      store.addBlock(block);
+    }
   };
 
   const handleUpdateBlock = (block: Block) => {
