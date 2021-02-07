@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { store } from '../../core/store';
 import { generateId } from '../../utils';
 
 import { Block, EditableBlock, InitialBlock } from '../editable-block';
 
-const initialList: Block[] = [{ ...InitialBlock, id: generateId() }];
-
 export const EditablePage: React.FC = () => {
-  const [blocks, setBlocks] = useState(initialList);
+  const [blocks, setBlocks] = useState<Block[]>([]);
+
+  useEffect(() => {
+    const subscription = store.getState().subscribe(setBlocks);
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleAddBlock = (afterBlockId: string) => {
     const newBlock = { ...InitialBlock, id: generateId() };
