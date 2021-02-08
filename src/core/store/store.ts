@@ -21,8 +21,8 @@ class Store {
       .findIndex((innerBlock) => innerBlock.id === block.id);
   }
 
-  public getState() {
-    return this.state;
+  public subscribe(subscriber: (value: Block[]) => void) {
+    return this.state.subscribe(subscriber);
   }
 
   public addBlock(anchorBlock: Block) {

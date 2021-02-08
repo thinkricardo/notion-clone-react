@@ -8,7 +8,7 @@ export const EditablePage: React.FC = () => {
   const [blocks, setBlocks] = useState<Block[]>([]);
 
   useEffect(() => {
-    const subscription = store.getState().subscribe(setBlocks);
+    const subscription = store.subscribe(setBlocks);
     return () => subscription.unsubscribe();
   }, []);
 
