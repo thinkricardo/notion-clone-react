@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-import { store } from '../../core/store';
+import { useBlocks } from '../../core/store';
 
-import { Block, EditableBlock } from '../editable-block';
+import { EditableBlock } from '../editable-block';
 
 export const EditablePage: React.FC = () => {
-  const [blocks, setBlocks] = useState<Block[]>([]);
-
-  useEffect(() => {
-    const subscription = store.subscribe(setBlocks);
-    return () => subscription.unsubscribe();
-  }, []);
+  const blocks = useBlocks();
 
   return (
     <>
