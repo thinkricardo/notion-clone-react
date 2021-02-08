@@ -26,7 +26,7 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({
     newBlock.content = elementRef.current.innerHTML;
 
     setValue(newBlock);
-    onUpdateBlock(value);
+    onUpdateBlock(newBlock);
   };
 
   const handleKeyDown = (evt: KeyboardEvent) => {
