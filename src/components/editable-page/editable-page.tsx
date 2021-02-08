@@ -1,18 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { useBlocks } from '../../core/store';
+import { store } from '../../core/store';
 
 import { EditableBlock } from '../editable-block';
 
 export const EditablePage: React.FC = () => {
-  const blocks = useBlocks();
+  const [blockIds, setBlockIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    const subscription = store.subscribeIds(setBlockIds);
+    return () => subscription.unsubscribe();
+  }, []);
 
   return (
     <>
       <h2>Page</h2>
 
-      {blocks.map((block) => {
-        return <EditableBlock key={block.id} block={block} />;
+      {blockIds.map((blockId) => {
+        return <EditableBlock key={blockId} blockId={blockId} />;
       })}
     </>
   );

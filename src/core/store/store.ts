@@ -19,10 +19,10 @@ class Store {
     this.stateIds.next([initialBlock.id]);
   }
 
-  private getBlockIndex(block: Block) {
+  private getBlockIndex(blockId: string) {
     return this.state
       .getValue()
-      .findIndex((innerBlock) => innerBlock.id === block.id);
+      .findIndex((innerBlock) => innerBlock.id === blockId);
   }
 
   public subscribe(subscriber: (value: Block[]) => void) {
@@ -35,7 +35,7 @@ class Store {
 
   public addBlock(anchorBlock: Block) {
     const newBlock = defaultBlock();
-    const anchorBlockIndex = this.getBlockIndex(anchorBlock);
+    const anchorBlockIndex = this.getBlockIndex(anchorBlock.id);
 
     const newState = [
       ...this.state.getValue().slice(0, anchorBlockIndex + 1),
@@ -54,12 +54,18 @@ class Store {
   }
 
   public updateBlock(block: Block) {
-    const blockIndex = this.getBlockIndex(block);
+    const blockIndex = this.getBlockIndex(block.id);
 
     const newState = [...this.state.getValue()];
     newState[blockIndex] = { ...block };
 
     this.state.next(newState);
+  }
+
+  public getBlock(blockId: string): Block {
+    const blockIndex = this.getBlockIndex(blockId);
+
+    return this.state.getValue()[blockIndex];
   }
 }
 
