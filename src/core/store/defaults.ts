@@ -1,4 +1,4 @@
-import { generateId } from '../../utils';
+import { generateId } from '../utils';
 
 import { Block } from '../../components/editable-block';
 
