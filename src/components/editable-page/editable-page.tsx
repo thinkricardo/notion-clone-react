@@ -21,14 +21,7 @@ export const EditablePage: React.FC = () => {
   };
 
   const handleUpdateBlock = (block: Block) => {
-    const blockIndex = blocks.findIndex(
-      (innerBlock) => innerBlock.id === block.id
-    );
-
-    const newBlocks = [...blocks];
-    newBlocks[blockIndex] = { ...block };
-
-    setBlocks(newBlocks);
+    store.updateBlock(block);
   };
 
   return (

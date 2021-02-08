@@ -37,6 +37,15 @@ class Store {
 
     this.state.next(newState);
   }
+
+  public updateBlock(block: Block) {
+    const blockIndex = this.getBlockIndex(block);
+
+    const newState = [...this.state.getValue()];
+    newState[blockIndex] = { ...block };
+
+    this.state.next(newState);
+  }
 }
 
 export const store = new Store();
