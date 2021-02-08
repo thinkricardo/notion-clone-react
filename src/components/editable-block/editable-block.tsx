@@ -1,18 +1,14 @@
 import React, { KeyboardEvent, useRef, useState } from 'react';
 
+import { store } from '../../core/store';
+
 import { Block } from './block';
 
 type EditableBlockProps = {
   block: Block;
-  onAddBlock: (afterBlockId: string) => void;
-  onUpdateBlock: (block: Block) => void;
 };
 
-export const EditableBlock: React.FC<EditableBlockProps> = ({
-  block,
-  onAddBlock,
-  onUpdateBlock,
-}) => {
+export const EditableBlock: React.FC<EditableBlockProps> = ({ block }) => {
   const elementRef = useRef<HTMLDivElement>(null);
 
   const [value, setValue] = useState(block);
@@ -26,13 +22,13 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({
     newBlock.content = elementRef.current.innerHTML;
 
     setValue(newBlock);
-    onUpdateBlock(newBlock);
+    store.updateBlock(newBlock);
   };
 
   const handleKeyDown = (evt: KeyboardEvent) => {
     if (evt.key === 'Enter' && !evt.shiftKey) {
       evt.preventDefault();
-      onAddBlock(block.id);
+      store.addBlock(block);
     }
   };
 
