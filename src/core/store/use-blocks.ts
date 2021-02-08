@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import { store } from './store';
+import { Block } from '../models';
 
-import { Block } from '../../components/editable-block';
+import { store } from './store';
 
 export const useBlocks = (): Block[] => {
   const [blocks, setBlocks] = useState<Block[]>([]);

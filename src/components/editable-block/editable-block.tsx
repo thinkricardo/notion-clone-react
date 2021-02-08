@@ -1,8 +1,7 @@
 import React, { KeyboardEvent, useRef, useState } from 'react';
 
+import { Block } from '../../core/models';
 import { store } from '../../core/store';
-
-import { Block } from './block';
 
 type EditableBlockProps = {
   block: Block;

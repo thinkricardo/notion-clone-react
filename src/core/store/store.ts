@@ -1,8 +1,8 @@
 import { BehaviorSubject } from 'rxjs';
 
-import { defaultBlock } from './defaults';
+import { Block } from '../models';
 
-import { Block } from '../../components/editable-block';
+import { defaultBlock } from './defaults';
 
 class Store {
   state = new BehaviorSubject<Block[]>([]);
