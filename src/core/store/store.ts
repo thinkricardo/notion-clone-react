@@ -6,13 +6,17 @@ import { defaultBlock } from './defaults';
 
 class Store {
   state = new BehaviorSubject<Block[]>([]);
+  stateIds = new BehaviorSubject<string[]>([]);
 
   constructor() {
     this.initStore();
   }
 
   private initStore() {
-    this.state.next([defaultBlock()]);
+    const initialBlock = defaultBlock();
+
+    this.state.next([initialBlock]);
+    this.stateIds.next([initialBlock.id]);
   }
 
   private getBlockIndex(block: Block) {
@@ -25,6 +29,10 @@ class Store {
     return this.state.subscribe(subscriber);
   }
 
+  public subscribeIds(subscriber: (value: string[]) => void) {
+    return this.stateIds.subscribe(subscriber);
+  }
+
   public addBlock(anchorBlock: Block) {
     const newBlock = defaultBlock();
     const anchorBlockIndex = this.getBlockIndex(anchorBlock);
@@ -35,7 +43,14 @@ class Store {
       ...this.state.getValue().slice(anchorBlockIndex + 1),
     ];
 
+    const newStateIds = [
+      ...this.stateIds.getValue().slice(0, anchorBlockIndex + 1),
+      newBlock.id,
+      ...this.stateIds.getValue().slice(anchorBlockIndex + 1),
+    ];
+
     this.state.next(newState);
+    this.stateIds.next(newStateIds);
   }
 
   public updateBlock(block: Block) {
