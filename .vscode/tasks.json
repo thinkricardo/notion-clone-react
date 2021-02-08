@@ -1,0 +1,26 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build app",
+      "type": "npm",
+      "script": "start",
+      "isBackground": true,
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": {
+        "owner": "custom",
+        "pattern": {
+          "regexp": "_____"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Server running at",
+          "endsPattern": "Built in"
+        }
+      }
+    }
+  ]
+}
