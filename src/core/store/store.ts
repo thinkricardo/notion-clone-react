@@ -8,21 +8,17 @@ class Store {
   state = new BehaviorSubject<Block[]>([]);
   stateIds = new BehaviorSubject<string[]>([]);
 
-  constructor() {
-    this.initStore();
-  }
-
-  private initStore() {
-    const initialBlock = defaultBlock();
-
-    this.state.next([initialBlock]);
-    this.stateIds.next([initialBlock.id]);
-  }
-
   private getBlockIndex(blockId: string) {
     return this.state
       .getValue()
       .findIndex((innerBlock) => innerBlock.id === blockId);
+  }
+
+  public initStore() {
+    const initialBlock = defaultBlock();
+
+    this.state.next([initialBlock]);
+    this.stateIds.next([initialBlock.id]);
   }
 
   public subscribe(subscriber: (value: Block[]) => void) {

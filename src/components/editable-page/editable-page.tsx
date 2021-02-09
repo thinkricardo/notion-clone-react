@@ -5,7 +5,15 @@ import { store } from '../../core/store';
 import { EditableBlock } from '../editable-block';
 
 export const EditablePage: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [blockIds, setBlockIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (isLoading) {
+      store.initStore();
+      setIsLoading(false);
+    }
+  }, [isLoading]);
 
   useEffect(() => {
     const subscription = store.subscribeIds(setBlockIds);
