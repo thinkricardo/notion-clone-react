@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
+import { useQuarkState } from '../../core/state';
 import { store } from '../../core/store';
 
 import { EditableBlock } from '../editable-block';
 
 export const EditablePage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [blockIds, setBlockIds] = useState<string[]>([]);
+  const [blockIds] = useQuarkState<string[]>('blockIds');
 
   useEffect(() => {
     if (isLoading) {
@@ -14,11 +15,6 @@ export const EditablePage: React.FC = () => {
       setIsLoading(false);
     }
   }, [isLoading]);
-
-  useEffect(() => {
-    const subscription = store.subscribeIds(setBlockIds);
-    return () => subscription.unsubscribe();
-  }, []);
 
   return (
     <>

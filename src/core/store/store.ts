@@ -1,67 +1,38 @@
-import { BehaviorSubject } from 'rxjs';
-
 import { Block } from '../models';
+import { quark } from '../state';
 
 import { defaultBlock } from './defaults';
 
 class Store {
-  state = new BehaviorSubject<Block[]>([]);
-  stateIds = new BehaviorSubject<string[]>([]);
+  private blockIds = quark<string[]>('blockIds', []);
 
   private getBlockIndex(blockId: string) {
-    return this.state
-      .getValue()
-      .findIndex((innerBlock) => innerBlock.id === blockId);
+    return this.blockIds
+      .get()
+      .findIndex((innerBlockId) => innerBlockId === blockId);
   }
 
-  public initStore() {
+  initStore() {
     const initialBlock = defaultBlock();
 
-    this.state.next([initialBlock]);
-    this.stateIds.next([initialBlock.id]);
+    this.blockIds.set([initialBlock.id]);
+    quark<Block>(initialBlock.id, initialBlock);
   }
 
-  public subscribe(subscriber: (value: Block[]) => void) {
-    return this.state.subscribe(subscriber);
-  }
-
-  public subscribeIds(subscriber: (value: string[]) => void) {
-    return this.stateIds.subscribe(subscriber);
-  }
-
-  public addBlock(anchorBlock: Block) {
+  addBlock(anchorBlock: Block) {
     const newBlock = defaultBlock();
+
     const anchorBlockIndex = this.getBlockIndex(anchorBlock.id);
+    const currentBlockIds = this.blockIds.get();
 
-    const newState = [
-      ...this.state.getValue().slice(0, anchorBlockIndex + 1),
-      newBlock,
-      ...this.state.getValue().slice(anchorBlockIndex + 1),
-    ];
-
-    const newStateIds = [
-      ...this.stateIds.getValue().slice(0, anchorBlockIndex + 1),
+    const newBlockIds = [
+      ...currentBlockIds.slice(0, anchorBlockIndex + 1),
       newBlock.id,
-      ...this.stateIds.getValue().slice(anchorBlockIndex + 1),
+      ...currentBlockIds.slice(anchorBlockIndex + 1),
     ];
 
-    this.state.next(newState);
-    this.stateIds.next(newStateIds);
-  }
-
-  public updateBlock(block: Block) {
-    const blockIndex = this.getBlockIndex(block.id);
-
-    const newState = [...this.state.getValue()];
-    newState[blockIndex] = { ...block };
-
-    this.state.next(newState);
-  }
-
-  public getBlock(blockId: string): Block {
-    const blockIndex = this.getBlockIndex(blockId);
-
-    return this.state.getValue()[blockIndex];
+    this.blockIds.set(newBlockIds);
+    quark<Block>(newBlock.id, newBlock);
   }
 }
 
