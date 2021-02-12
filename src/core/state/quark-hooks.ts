@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Quark } from './quark';
 import { quarkState } from './quark-state';
 
-export const useQuarkState = <T>(key: string): [T, (newValue: T) => void] => {
+export const useQuarkValue = <T>(key: string): T => {
   const instance: Quark<T> = quarkState.get<T>(key);
 
   const [innerValue, setInnerValue] = useState<T>(instance.get());
@@ -13,5 +13,12 @@ export const useQuarkState = <T>(key: string): [T, (newValue: T) => void] => {
     return () => instance.unsubscribe(subscription);
   }, [instance, setInnerValue]);
 
-  return [innerValue, (newValue: T) => instance.set(newValue)];
+  return innerValue;
+};
+
+export const useQuarkState = <T>(key: string): [T, (newValue: T) => void] => {
+  const instance: Quark<T> = quarkState.get<T>(key);
+  const value = useQuarkValue<T>(key);
+
+  return [value, (newValue: T) => instance.set(newValue)];
 };
