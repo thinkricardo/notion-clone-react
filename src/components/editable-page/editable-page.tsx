@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
-import { useQuarkState } from '../../core/state';
+import { useQuarkValue } from '../../core/state';
 import { store } from '../../core/store';
 
 import { EditableBlock } from '../editable-block';
 
 export const EditablePage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [blockIds] = useQuarkState<string[]>('blockIds');
+  const blockIds = useQuarkValue<string[]>('blockIds');
 
   useEffect(() => {
     if (isLoading) {
