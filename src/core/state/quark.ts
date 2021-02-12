@@ -16,8 +16,10 @@ export class Quark<T> {
   }
 
   set(newValue: T): void {
-    this.value = newValue;
-    this.listeners.next(this.value);
+    if (this.value !== newValue) {
+      this.value = newValue;
+      this.listeners.next(this.value);
+    }
   }
 
   subscribe(listener: ListenerType<T>): Subscription {
