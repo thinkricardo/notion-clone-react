@@ -1,18 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { useBlocks } from '../../core/store';
+import { useQuarkValue } from '../../core/state';
+import { store } from '../../core/store';
 
 import { EditableBlock } from '../editable-block';
 
 export const EditablePage: React.FC = () => {
-  const blocks = useBlocks();
+  const [isLoading, setIsLoading] = useState(true);
+  const blockIds = useQuarkValue<string[]>('blockIds');
+
+  useEffect(() => {
+    if (isLoading) {
+      store.initStore();
+      setIsLoading(false);
+    }
+  }, [isLoading]);
 
   return (
     <>
       <h2>Page</h2>
 
-      {blocks.map((block) => {
-        return <EditableBlock key={block.id} block={block} />;
+      {blockIds.map((blockId) => {
+        return <EditableBlock key={blockId} blockId={blockId} />;
       })}
     </>
   );

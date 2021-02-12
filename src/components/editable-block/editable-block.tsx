@@ -1,27 +1,27 @@
-import React, { KeyboardEvent, useRef, useState } from 'react';
+import React, { KeyboardEvent, useRef } from 'react';
 
 import { Block } from '../../core/models';
+import { useQuarkState } from '../../core/state';
 import { store } from '../../core/store';
 
 type EditableBlockProps = {
-  block: Block;
+  blockId: string;
 };
 
-export const EditableBlock: React.FC<EditableBlockProps> = ({ block }) => {
+export const EditableBlock: React.FC<EditableBlockProps> = ({ blockId }) => {
   const elementRef = useRef<HTMLDivElement>(null);
 
-  const [value, setValue] = useState(block);
+  const [block, setBlock] = useQuarkState<Block>(blockId);
 
   const handleInput = () => {
     if (!elementRef.current) {
       return;
     }
 
-    const newBlock = { ...value };
+    const newBlock = { ...block };
     newBlock.content = elementRef.current.innerHTML;
 
-    setValue(newBlock);
-    store.updateBlock(newBlock);
+    setBlock(newBlock);
   };
 
   const handleKeyDown = (evt: KeyboardEvent) => {
@@ -37,7 +37,7 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({ block }) => {
       contentEditable={true}
       onInput={handleInput}
       onKeyDown={handleKeyDown}
-      dangerouslySetInnerHTML={{ __html: value.content }}
+      dangerouslySetInnerHTML={{ __html: block.content }}
     ></div>
   );
 };

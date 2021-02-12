@@ -1,50 +1,38 @@
-import { BehaviorSubject } from 'rxjs';
-
 import { Block } from '../models';
+import { quark } from '../state';
 
 import { defaultBlock } from './defaults';
 
 class Store {
-  state = new BehaviorSubject<Block[]>([]);
+  private blockIds = quark<string[]>('blockIds', []);
 
-  constructor() {
-    this.initStore();
+  private getBlockIndex(blockId: string) {
+    return this.blockIds
+      .get()
+      .findIndex((innerBlockId) => innerBlockId === blockId);
   }
 
-  private initStore() {
-    this.state.next([defaultBlock()]);
+  initStore() {
+    const initialBlock = defaultBlock();
+
+    this.blockIds.set([initialBlock.id]);
+    quark<Block>(initialBlock.id, initialBlock);
   }
 
-  private getBlockIndex(block: Block) {
-    return this.state
-      .getValue()
-      .findIndex((innerBlock) => innerBlock.id === block.id);
-  }
-
-  public subscribe(subscriber: (value: Block[]) => void) {
-    return this.state.subscribe(subscriber);
-  }
-
-  public addBlock(anchorBlock: Block) {
+  addBlock(anchorBlock: Block) {
     const newBlock = defaultBlock();
-    const anchorBlockIndex = this.getBlockIndex(anchorBlock);
 
-    const newState = [
-      ...this.state.getValue().slice(0, anchorBlockIndex + 1),
-      newBlock,
-      ...this.state.getValue().slice(anchorBlockIndex + 1),
+    const anchorBlockIndex = this.getBlockIndex(anchorBlock.id);
+    const currentBlockIds = this.blockIds.get();
+
+    const newBlockIds = [
+      ...currentBlockIds.slice(0, anchorBlockIndex + 1),
+      newBlock.id,
+      ...currentBlockIds.slice(anchorBlockIndex + 1),
     ];
 
-    this.state.next(newState);
-  }
-
-  public updateBlock(block: Block) {
-    const blockIndex = this.getBlockIndex(block);
-
-    const newState = [...this.state.getValue()];
-    newState[blockIndex] = { ...block };
-
-    this.state.next(newState);
+    this.blockIds.set(newBlockIds);
+    quark<Block>(newBlock.id, newBlock);
   }
 }
 
