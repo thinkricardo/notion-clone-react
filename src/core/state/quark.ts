@@ -1,5 +1,7 @@
 import { BehaviorSubject, Subscription } from 'rxjs';
 
+import { ListenerType } from './quark-types';
+
 export class Quark<T> {
   private value: T;
   private listeners: BehaviorSubject<T>;
@@ -18,7 +20,7 @@ export class Quark<T> {
     this.listeners.next(this.value);
   }
 
-  subscribe(listener: (value: T) => void): Subscription {
+  subscribe(listener: ListenerType<T>): Subscription {
     return this.listeners.subscribe(listener);
   }
 
