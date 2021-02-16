@@ -1,4 +1,6 @@
-import React, { KeyboardEvent, useRef } from 'react';
+import React, { KeyboardEvent, useEffect, useRef, useState } from 'react';
+
+import { getCaretPosition, setCaretPosition } from '../../core/utils';
 
 type EditableProps = {
   value: string;
@@ -12,11 +14,22 @@ export const Editable: React.FC<EditableProps> = ({
   onKeyDown,
 }) => {
   const elementRef = useRef<HTMLDivElement>(null);
+  const [caretCurrentPosition, setCaretCurrentPosition] = useState(0);
+
+  useEffect(() => {
+    if (!elementRef.current) {
+      return;
+    }
+
+    setCaretPosition(elementRef.current, caretCurrentPosition);
+  });
 
   const handleInput = () => {
     if (!elementRef.current) {
       return;
     }
+
+    setCaretCurrentPosition(getCaretPosition(elementRef.current));
 
     onInput(elementRef.current.innerHTML);
   };
