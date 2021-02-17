@@ -1,6 +1,6 @@
 import React, { KeyboardEvent, useEffect, useRef, useState } from 'react';
 
-import { getCaretPosition, setCaretPosition } from '../../core/utils';
+import { getCaretPosition, setCaretPosition } from '../../utils';
 
 type EditableProps = {
   value: string;
