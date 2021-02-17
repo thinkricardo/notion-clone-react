@@ -2,6 +2,8 @@ import React, { KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 import { getCaretPosition, setCaretPosition } from '../../utils';
 
+import { EditableWrapper } from './editable.styles';
+
 type EditableProps = {
   value: string;
   onInput: (value: string) => void;
@@ -39,12 +41,14 @@ export const Editable: React.FC<EditableProps> = ({
   };
 
   return (
-    <div
-      ref={elementRef}
-      contentEditable={true}
-      onInput={handleInput}
-      onKeyDown={handleKeyDown}
-      dangerouslySetInnerHTML={{ __html: value }}
-    ></div>
+    <EditableWrapper>
+      <div
+        ref={elementRef}
+        contentEditable={true}
+        onInput={handleInput}
+        onKeyDown={handleKeyDown}
+        dangerouslySetInnerHTML={{ __html: value }}
+      ></div>
+    </EditableWrapper>
   );
 };
