@@ -2,7 +2,7 @@ import React from 'react';
 
 import { EditablePage } from '../../components/editable-page';
 
-import './App.scss';
+import './app.scss';
 
 export const App: React.FC = () => {
   return (
