@@ -1,5 +1,11 @@
 module.exports = {
-  extends: ['eslint:recommended', 'plugin:prettier/recommended'],
+  extends: [
+    'eslint:recommended',
+
+    'plugin:import/recommended',
+
+    'plugin:prettier/recommended',
+  ],
   parserOptions: {
     ecmaVersion: 2020,
   },
@@ -8,6 +14,8 @@ module.exports = {
   },
   rules: {
     'no-console': 'error',
+
+    'import/no-cycle': 'error',
   },
   overrides: [
     {
@@ -19,6 +27,9 @@ module.exports = {
 
         'plugin:react/recommended',
         'plugin:react-hooks/recommended',
+
+        'plugin:import/typescript',
+        'plugin:import/react',
 
         'plugin:prettier/recommended',
         'prettier/@typescript-eslint',
