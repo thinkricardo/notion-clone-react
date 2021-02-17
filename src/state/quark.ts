@@ -1,6 +1,6 @@
 import { BehaviorSubject, Subscription } from 'rxjs';
 
-import { ListenerType } from './quark-types';
+import { ListenerType } from './quark.types';
 
 export class Quark<T> {
   private value: T;

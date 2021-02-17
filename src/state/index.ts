@@ -1,2 +1,2 @@
-export { quark } from './quark-helpers';
-export { useQuarkState, useQuarkValue } from './quark-hooks';
+export { quark } from './quark.helpers';
+export { useQuarkState, useQuarkValue } from './quark.hooks';

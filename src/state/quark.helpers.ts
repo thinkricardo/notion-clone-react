@@ -1,5 +1,5 @@
 import { Quark } from './quark';
-import { quarkState } from './quark-state';
+import { quarkState } from './quark.state';
 
 export const quark = <T>(key: string, initialValue: T): Quark<T> => {
   const instance = new Quark<T>(initialValue);
