@@ -17,6 +17,7 @@ const initBuild = async () => {
     entryPoints: [entryPoint],
     outfile: outFile,
     incremental: true,
+    sourcemap: true,
     define: { 'process.env.NODE_ENV': '"development"' },
   });
 };
