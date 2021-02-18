@@ -1,7 +1,11 @@
 import { build } from 'esbuild';
+import liveServer from 'live-server';
+
+const serverPort = 1234;
+const serverRoot = 'build';
 
 const entryPoint = './src/index.tsx';
-const outFile = './build/index.js';
+const outFile = `./${serverRoot}/index.js`;
 
 const initBuild = async () => {
   await build({
@@ -12,4 +16,17 @@ const initBuild = async () => {
   });
 };
 
-initBuild();
+const startServer = () => {
+  liveServer.start({
+    root: serverRoot,
+    port: serverPort,
+    open: false,
+  });
+};
+
+const run = async () => {
+  await initBuild();
+  startServer();
+};
+
+run();
