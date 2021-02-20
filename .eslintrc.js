@@ -15,6 +15,7 @@ module.exports = {
   rules: {
     'no-console': 'error',
 
+    'import/imports-first': 'error',
     'import/no-cycle': 'error',
   },
   overrides: [
