@@ -29,13 +29,12 @@ export const getConfiguration = (): BuildConfiguration => {
 export const startBuild = async (
   configuration: BuildConfiguration
 ): Promise<BuildIncremental | void> => {
-  logger.newLine();
   logger.information(
     `Build started on ${configuration.sourceRoot} to ${configuration.serverRoot}`
   );
   logger.startTrace();
 
-  const builder = build({
+  const builder = await build({
     bundle: true,
     entryPoints: [configuration.entryPoint],
     outfile: configuration.outFile,
@@ -44,7 +43,7 @@ export const startBuild = async (
     define: { 'process.env.NODE_ENV': '"development"' },
   })
     .catch(() => {
-      logger.error('Errors found during build.');
+      logger.error('Errors found during build');
     })
     .finally(() => {
       logger.information('Build ended in', true);
@@ -61,7 +60,7 @@ const startRebuild = (path: string, builder: BuildIncremental) => {
   builder
     .rebuild()
     .catch(() => {
-      logger.error('Errors found during rebuild.');
+      logger.error('Errors found during rebuild');
     })
     .finally(() => {
       logger.information('Rebuild ended in', true);

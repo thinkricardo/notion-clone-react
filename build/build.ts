@@ -9,8 +9,6 @@ import {
 } from './build.utils';
 
 const run = async () => {
-  logger.clear();
-
   const configuration = getConfiguration();
 
   const builder = await startBuild(configuration);
