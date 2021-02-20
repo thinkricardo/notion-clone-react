@@ -2,20 +2,16 @@ import chokidar from 'chokidar';
 import { build, BuildIncremental } from 'esbuild';
 import liveServer from 'live-server';
 
-const serverPort = 1234;
-const serverRoot = 'build';
+import { BuildConfiguration, getConfiguration } from './build.config';
 
-const sourceRoot = 'src';
-const entryPoint = `./${sourceRoot}/index.tsx`;
-const outFile = `./${serverRoot}/index.js`;
-
+let configuration: BuildConfiguration;
 let builder: BuildIncremental;
 
 const initBuild = async () => {
   builder = await build({
     bundle: true,
-    entryPoints: [entryPoint],
-    outfile: outFile,
+    entryPoints: [configuration.entryPoint],
+    outfile: configuration.outFile,
     incremental: true,
     sourcemap: true,
     define: { 'process.env.NODE_ENV': '"development"' },
@@ -24,7 +20,7 @@ const initBuild = async () => {
 
 const initWatcher = () => {
   chokidar
-    .watch(`./${sourceRoot}/**/*.{ts,tsx}`, {
+    .watch(configuration.watchedFiles, {
       ignoreInitial: true,
       interval: 0,
     })
@@ -38,13 +34,15 @@ const initWatcher = () => {
 
 const startServer = () => {
   liveServer.start({
-    root: serverRoot,
-    port: serverPort,
+    root: configuration.serverRoot,
+    port: configuration.serverPort,
     open: false,
   });
 };
 
 const run = async () => {
+  configuration = getConfiguration();
+
   await initBuild();
   initWatcher();
   startServer();
