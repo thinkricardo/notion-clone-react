@@ -1,5 +1,6 @@
 import chokidar from 'chokidar';
 import { build, BuildIncremental } from 'esbuild';
+import fs from 'fs';
 import liveServer from 'live-server';
 
 import { BuildConfiguration, getConfiguration } from './build.config';
@@ -16,6 +17,13 @@ const initBuild = async () => {
     sourcemap: true,
     define: { 'process.env.NODE_ENV': '"development"' },
   });
+};
+
+const transformDefaultPage = () => {
+  const fileContents = fs.readFileSync(configuration.defaultPage, 'utf8');
+  const newFileContents = fileContents.replace('index.tsx', 'index.js');
+
+  fs.writeFileSync(configuration.transformedPage, newFileContents, 'utf8');
 };
 
 const initWatcher = () => {
@@ -44,6 +52,8 @@ const run = async () => {
   configuration = getConfiguration();
 
   await initBuild();
+  transformDefaultPage();
+
   initWatcher();
   startServer();
 };
