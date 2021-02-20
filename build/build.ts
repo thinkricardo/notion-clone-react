@@ -3,7 +3,8 @@ import { build, BuildIncremental } from 'esbuild';
 import fs from 'fs';
 import liveServer from 'live-server';
 
-import { BuildConfiguration, getConfiguration } from './build.config';
+import { BuildConfiguration } from './build.types';
+import { getConfiguration } from './build.utils';
 
 let configuration: BuildConfiguration;
 let builder: BuildIncremental;
