@@ -17,8 +17,8 @@
         },
         "background": {
           "activeOnStart": true,
-          "beginsPattern": "Server running at",
-          "endsPattern": "Built in"
+          "beginsPattern": "Build started at",
+          "endsPattern": "Ready for changes"
         }
       }
     }
