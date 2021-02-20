@@ -9,7 +9,7 @@
     "format:staged": "pretty-quick --staged",
     "format:write": "prettier --write '**'",
     "style:lint": "stylelint '**'",
-    "start": "parcel ./src/index.html"
+    "start": "ts-node ./build/build.ts"
   },
   "dependencies": {
     "react": "^17.0.1",
