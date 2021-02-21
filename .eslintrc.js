@@ -29,6 +29,7 @@ module.exports = {
         'plugin:react/recommended',
         'plugin:react-hooks/recommended',
 
+        'plugin:import/recommended',
         'plugin:import/typescript',
         'plugin:import/react',
 
