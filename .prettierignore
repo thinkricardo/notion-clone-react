@@ -20,7 +20,6 @@
 package-lock.json
 
 # ignore specific folders
-.cache
 dist
 
 node_modules

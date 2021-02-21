@@ -15,6 +15,7 @@ module.exports = {
   rules: {
     'no-console': 'error',
 
+    'import/imports-first': 'error',
     'import/no-cycle': 'error',
   },
   overrides: [
@@ -28,6 +29,7 @@ module.exports = {
         'plugin:react/recommended',
         'plugin:react-hooks/recommended',
 
+        'plugin:import/recommended',
         'plugin:import/typescript',
         'plugin:import/react',
 
