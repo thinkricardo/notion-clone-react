@@ -6,48 +6,74 @@ import { EditableWrapper } from './editable.styles';
 
 type EditableProps = {
   value: string;
+  placeholder: string;
+
   onInput: (value: string) => void;
   onKeyDown: (evt: KeyboardEvent) => void;
 };
 
 export const Editable: React.FC<EditableProps> = ({
   value,
+  placeholder,
+
   onInput,
   onKeyDown,
 }) => {
   const elementRef = useRef<HTMLDivElement>(null);
-  const [caretCurrentPosition, setCaretCurrentPosition] = useState(0);
+  const [caretCurrentPosition, setCaretCurrentPosition] = useState(-1);
 
   useEffect(() => {
     if (!elementRef.current) {
       return;
     }
 
-    setCaretPosition(elementRef.current, caretCurrentPosition);
+    if (caretCurrentPosition >= 0) {
+      setCaretPosition(elementRef.current, caretCurrentPosition);
+    }
   });
 
-  const handleInput = () => {
+  const handleOnInput = () => {
     if (!elementRef.current) {
       return;
     }
 
-    setCaretCurrentPosition(getCaretPosition(elementRef.current));
+    const element = elementRef.current;
 
-    onInput(elementRef.current.innerHTML);
+    setCaretCurrentPosition(getCaretPosition(element));
+
+    let currentValue = element.innerHTML;
+
+    if (!value && currentValue) {
+      currentValue = currentValue.replace(placeholder, '');
+    }
+
+    onInput(currentValue);
   };
 
-  const handleKeyDown = (evt: KeyboardEvent) => {
+  const handleOnKeyDown = (evt: KeyboardEvent) => {
     onKeyDown(evt);
   };
 
+  const handleOnFocus = () => {
+    if (!value) {
+      setCaretCurrentPosition(0);
+    }
+  };
+
+  const handleOnBlur = () => {
+    setCaretCurrentPosition(-1);
+  };
+
   return (
-    <EditableWrapper>
+    <EditableWrapper showPlaceholder={!value}>
       <div
         ref={elementRef}
         contentEditable={true}
-        onInput={handleInput}
-        onKeyDown={handleKeyDown}
-        dangerouslySetInnerHTML={{ __html: value }}
+        onInput={handleOnInput}
+        onKeyDown={handleOnKeyDown}
+        onFocus={handleOnFocus}
+        onBlur={handleOnBlur}
+        dangerouslySetInnerHTML={{ __html: value ?? placeholder }}
       ></div>
     </EditableWrapper>
   );

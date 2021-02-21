@@ -13,14 +13,14 @@ type EditableBlockProps = {
 export const EditableBlock: React.FC<EditableBlockProps> = ({ blockId }) => {
   const [block, setBlock] = useQuarkState<Block>(blockId);
 
-  const handleInput = (value: string) => {
+  const handleOnInput = (value: string) => {
     const newBlock = { ...block };
     newBlock.content = value;
 
     setBlock(newBlock);
   };
 
-  const handleKeyDown = (evt: KeyboardEvent) => {
+  const handleOnKeyDown = (evt: KeyboardEvent) => {
     if (evt.key === 'Enter' && !evt.shiftKey) {
       evt.preventDefault();
       store.addBlock(block);
@@ -30,8 +30,9 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({ blockId }) => {
   return (
     <Editable
       value={block.content}
-      onInput={handleInput}
-      onKeyDown={handleKeyDown}
+      placeholder="Type / for commands"
+      onInput={handleOnInput}
+      onKeyDown={handleOnKeyDown}
     />
   );
 };

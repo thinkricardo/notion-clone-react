@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 
-export const EditableWrapper = styled.div`
+type EditableWrapperProps = {
+  showPlaceholder: boolean;
+};
+
+export const EditableWrapper = styled.div<EditableWrapperProps>`
   > * {
     padding: 6px;
+    color: ${(props) => (props.showPlaceholder ? '#888888' : 'default')};
   }
 `;
