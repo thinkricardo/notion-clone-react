@@ -1,5 +1,6 @@
 import chokidar from 'chokidar';
 import { build, BuildIncremental } from 'esbuild';
+import { sassPlugin } from 'esbuild-sass-plugin';
 import fs from 'fs';
 import liveServer from 'live-server';
 
@@ -40,6 +41,7 @@ export const startBuild = async (
     outfile: configuration.outFile,
     incremental: true,
     sourcemap: true,
+    plugins: [sassPlugin({ type: 'style' })],
     define: { 'process.env.NODE_ENV': '"development"' },
   })
     .catch(() => {
