@@ -16,6 +16,9 @@
 !*.ts
 !*.tsx
 
+# ignore specific files
+package-lock.json
+
 # ignore specific folders
 .cache
 dist

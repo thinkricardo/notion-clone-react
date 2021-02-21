@@ -7,8 +7,10 @@
 # set files to lint
 !*.css
 !*.scss
+!*.tsx
 
 # ignore specific folders
 .cache
 dist
+
 node_modules

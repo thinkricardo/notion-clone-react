@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import { useQuarkValue } from '../../core/state';
-import { store } from '../../core/store';
+import { useQuarkValue } from '../../state';
+import { store } from '../../store';
 
 import { EditableBlock } from '../editable-block';
 

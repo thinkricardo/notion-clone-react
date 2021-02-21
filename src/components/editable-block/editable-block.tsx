@@ -1,8 +1,8 @@
 import React, { KeyboardEvent } from 'react';
 
-import { Block } from '../../core/models';
-import { useQuarkState } from '../../core/state';
-import { store } from '../../core/store';
+import { Block } from '../../models';
+import { useQuarkState } from '../../state';
+import { store } from '../../store';
 
 import { Editable } from '../../elements/editable';
 
