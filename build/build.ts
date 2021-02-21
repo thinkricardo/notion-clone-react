@@ -1,5 +1,3 @@
-import { logger } from './build.logger';
-
 import {
   getConfiguration,
   startBuild,
