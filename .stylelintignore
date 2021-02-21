@@ -10,7 +10,6 @@
 !*.tsx
 
 # ignore specific folders
-.cache
 dist
 
 node_modules
