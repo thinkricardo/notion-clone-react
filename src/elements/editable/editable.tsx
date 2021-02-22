@@ -32,6 +32,12 @@ export const Editable: React.FC<EditableProps> = ({
     }
   });
 
+  const setInitialCaretPosition = () => {
+    if (!value) {
+      setCaretCurrentPosition(0);
+    }
+  };
+
   const handleOnInput = () => {
     if (!elementRef.current) {
       return;
@@ -60,13 +66,15 @@ export const Editable: React.FC<EditableProps> = ({
   };
 
   const handleOnFocus = () => {
-    if (!value) {
-      setCaretCurrentPosition(0);
-    }
+    setInitialCaretPosition();
   };
 
   const handleOnBlur = () => {
     setCaretCurrentPosition(-1);
+  };
+
+  const handleOnMouseUp = () => {
+    setInitialCaretPosition();
   };
 
   return (
@@ -78,6 +86,7 @@ export const Editable: React.FC<EditableProps> = ({
         onKeyDown={handleOnKeyDown}
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
+        onMouseUp={handleOnMouseUp}
         dangerouslySetInnerHTML={{ __html: !value ? placeholder : value }}
       ></div>
     </EditableWrapper>
