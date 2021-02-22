@@ -39,14 +39,19 @@ export const Editable: React.FC<EditableProps> = ({
 
     const element = elementRef.current;
 
-    setCaretCurrentPosition(getCaretPosition(element));
-
     let currentValue = element.innerHTML;
+    const currentText = element.innerText.replace('\n', '');
 
-    if (!value && currentValue) {
+    let caretPosition = getCaretPosition(element);
+
+    if (!currentText) {
+      currentValue = '';
+    } else if (currentText && !value) {
       currentValue = currentValue.replace(placeholder, '');
+      caretPosition = currentValue.length;
     }
 
+    setCaretCurrentPosition(caretPosition);
     onInput(currentValue);
   };
 
@@ -73,7 +78,7 @@ export const Editable: React.FC<EditableProps> = ({
         onKeyDown={handleOnKeyDown}
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
-        dangerouslySetInnerHTML={{ __html: value ?? placeholder }}
+        dangerouslySetInnerHTML={{ __html: !value ? placeholder : value }}
       ></div>
     </EditableWrapper>
   );
