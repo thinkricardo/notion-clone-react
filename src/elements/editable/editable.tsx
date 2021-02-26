@@ -101,7 +101,6 @@ export class Editable extends React.Component<EditableProps> {
   };
 
   render = (): ReactNode => {
-    console.log('render');
     const { value, placeholder } = this.props;
 
     return (
