@@ -14,10 +14,7 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({ blockId }) => {
   const [block, setBlock] = useQuarkState<Block>(blockId);
 
   const handleOnInput = (value: string) => {
-    const newBlock = { ...block };
-    newBlock.content = value;
-
-    setBlock(newBlock);
+    setBlock({ ...block, content: value });
   };
 
   const handleOnKeyDown = (evt: KeyboardEvent) => {
