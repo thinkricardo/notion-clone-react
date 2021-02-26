@@ -8,28 +8,6 @@ const getSelection = (): Selection | null => {
   return selection();
 };
 
-const findNodeAtPosition = (parent: Node, position: number): [Node, number] => {
-  if (parent.nodeType === Node.TEXT_NODE) {
-    if (parent.textContent) {
-      position -= parent.textContent.length;
-    }
-
-    return [parent, position];
-  }
-
-  for (const child of parent.childNodes) {
-    const [node, offset] = findNodeAtPosition(child, position);
-
-    if (offset <= 0) {
-      return [node, offset];
-    }
-
-    position = offset;
-  }
-
-  return [parent, position];
-};
-
 export const getCaretPosition = (element: HTMLElement): number => {
   const selection = getSelection();
 
@@ -46,6 +24,45 @@ export const getCaretPosition = (element: HTMLElement): number => {
   return clonedRange.toString().length;
 };
 
+const getTextNodes = (element: HTMLElement): Node[] => {
+  const iterator = document.createNodeIterator(element, NodeFilter.SHOW_TEXT);
+
+  const nodes: Node[] = [];
+  let currentNode: Node | null;
+
+  while ((currentNode = iterator.nextNode())) {
+    nodes.push(currentNode);
+  }
+
+  return nodes;
+};
+
+const getCaretData = (
+  element: HTMLElement,
+  position: number
+): { node: Node | null; offset: number } => {
+  const nodes = getTextNodes(element);
+
+  let currentNode: Node | null = null;
+  let offset = position;
+
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i];
+    const nodeValue = node.nodeValue;
+
+    if (nodeValue) {
+      if (offset > nodeValue.length) {
+        offset -= nodeValue.length;
+      } else {
+        currentNode = node;
+        break;
+      }
+    }
+  }
+
+  return { node: currentNode, offset };
+};
+
 export const setCaretPosition = (
   element: HTMLElement,
   position: number
@@ -56,17 +73,13 @@ export const setCaretPosition = (
     return;
   }
 
-  const [node, offset] = findNodeAtPosition(element as Node, position);
+  const caretData = getCaretData(element, position);
 
-  let offsetPosition = offset * -1;
+  if (caretData.node) {
+    const range = document.createRange();
+    range.setStart(caretData.node, caretData.offset);
 
-  if (node.textContent) {
-    offsetPosition = node.textContent.length - offsetPosition;
+    selection.removeAllRanges();
+    selection.addRange(range);
   }
-
-  const range = document.createRange();
-  range.setStart(node, offsetPosition);
-
-  selection.removeAllRanges();
-  selection.addRange(range);
 };

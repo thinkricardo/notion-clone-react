@@ -1,54 +1,120 @@
-import React, { KeyboardEvent, useEffect, useRef, useState } from 'react';
+import React, { KeyboardEvent, ReactNode } from 'react';
 
-import { getCaretPosition, setCaretPosition } from '../../utils';
+import { setCaretPosition } from '../../utils';
 
 import { EditableWrapper } from './editable.styles';
 
 type EditableProps = {
   value: string;
+  placeholder: string;
+
   onInput: (value: string) => void;
   onKeyDown: (evt: KeyboardEvent) => void;
 };
 
-export const Editable: React.FC<EditableProps> = ({
-  value,
-  onInput,
-  onKeyDown,
-}) => {
-  const elementRef = useRef<HTMLDivElement>(null);
-  const [caretCurrentPosition, setCaretCurrentPosition] = useState(0);
+export class Editable extends React.Component<EditableProps> {
+  private elementRef = React.createRef<HTMLDivElement>();
 
-  useEffect(() => {
-    if (!elementRef.current) {
+  hasContent = (): boolean => {
+    if (!this.elementRef.current) {
+      return false;
+    }
+
+    const element = this.elementRef.current;
+    const currentText = element.innerText.replace('\n', '');
+
+    if (!currentText || currentText === this.props.placeholder) {
+      return false;
+    }
+
+    return true;
+  };
+
+  setCaretAtStart = (): void => {
+    if (!this.elementRef.current) {
       return;
     }
 
-    setCaretPosition(elementRef.current, caretCurrentPosition);
-  });
+    if (!this.hasContent()) {
+      setCaretPosition(this.elementRef.current, 0);
+    }
+  };
 
-  const handleInput = () => {
-    if (!elementRef.current) {
+  shouldComponentUpdate = (newProps: EditableProps): boolean => {
+    if (!this.elementRef.current) {
+      return false;
+    }
+
+    const element = this.elementRef.current;
+
+    if (!this.hasContent()) {
+      return true;
+    }
+
+    if (element.innerHTML !== newProps.value) {
+      return true;
+    }
+
+    return false;
+  };
+
+  componentDidUpdate = (): void => {
+    if (!this.elementRef.current) {
       return;
     }
 
-    setCaretCurrentPosition(getCaretPosition(elementRef.current));
+    if (this.hasContent()) {
+      const element = this.elementRef.current;
+      const currentText = element.innerText.replace('\n', '');
 
-    onInput(elementRef.current.innerHTML);
+      setCaretPosition(this.elementRef.current, currentText.length);
+    }
   };
 
-  const handleKeyDown = (evt: KeyboardEvent) => {
-    onKeyDown(evt);
+  handleOnInput = (): void => {
+    if (!this.elementRef.current) {
+      return;
+    }
+
+    const element = this.elementRef.current;
+    let currentValue = element.innerHTML;
+
+    if (!this.hasContent()) {
+      currentValue = '';
+    } else if (this.hasContent() && !this.props.value) {
+      currentValue = currentValue.replace(this.props.placeholder, '');
+    }
+
+    this.props.onInput(currentValue);
   };
 
-  return (
-    <EditableWrapper>
-      <div
-        ref={elementRef}
-        contentEditable={true}
-        onInput={handleInput}
-        onKeyDown={handleKeyDown}
-        dangerouslySetInnerHTML={{ __html: value }}
-      ></div>
-    </EditableWrapper>
-  );
-};
+  handleOnKeyDown = (evt: KeyboardEvent): void => {
+    this.props.onKeyDown(evt);
+  };
+
+  handleOnFocus = (): void => {
+    this.setCaretAtStart();
+  };
+
+  handleOnMouseUp = (): void => {
+    this.setCaretAtStart();
+  };
+
+  render = (): ReactNode => {
+    const { value, placeholder } = this.props;
+
+    return (
+      <EditableWrapper showPlaceholder={!value}>
+        <div
+          ref={this.elementRef}
+          contentEditable={true}
+          onInput={this.handleOnInput}
+          onKeyDown={this.handleOnKeyDown}
+          onFocus={this.handleOnFocus}
+          onMouseUp={this.handleOnMouseUp}
+          dangerouslySetInnerHTML={{ __html: !value ? placeholder : value }}
+        ></div>
+      </EditableWrapper>
+    );
+  };
+}
