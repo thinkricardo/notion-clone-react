@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MenuItemWrapper } from './menu-title.styles';
+import { MenuItemWrapper } from './menu-item.styles';
 
 type MenuItemProps = {
   id: string;
