@@ -35,7 +35,7 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({ blockId }) => {
         onKeyDown={handleOnKeyDown}
       />
 
-      <Menu />
+      <Menu isOpen={true} />
     </>
   );
 };

@@ -5,9 +5,13 @@ import { MenuWrapper } from './menu.styles';
 import { MenuItem } from './menu-item';
 import { MenuTitle } from './menu-title';
 
-export const Menu: React.FC = () => {
+type MenuProps = {
+  isOpen: boolean;
+};
+
+export const Menu: React.FC<MenuProps> = ({ isOpen }) => {
   return (
-    <MenuWrapper>
+    <MenuWrapper isVisible={isOpen}>
       <MenuTitle>Basic blocks</MenuTitle>
 
       <MenuItem>Text</MenuItem>
