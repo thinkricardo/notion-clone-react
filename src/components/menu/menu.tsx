@@ -1,11 +1,12 @@
 import React from 'react';
 
 import { MenuItem } from './menu-item';
+import { MenuTitle } from './menu-title';
 
 export const Menu: React.FC = () => {
   return (
     <div>
-      <h6>Basic blocks</h6>
+      <MenuTitle>Basic blocks</MenuTitle>
 
       <MenuItem>Text</MenuItem>
       <MenuItem>Heading 1</MenuItem>
