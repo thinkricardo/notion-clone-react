@@ -4,6 +4,8 @@ import { Block } from '../../models';
 import { useQuarkState } from '../../state';
 import { store } from '../../store';
 
+import { Menu } from '../menu';
+
 import { Editable } from '../../elements/editable';
 
 type EditableBlockProps = {
@@ -25,11 +27,15 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({ blockId }) => {
   };
 
   return (
-    <Editable
-      value={block.content}
-      placeholder="Type / for commands"
-      onInput={handleOnInput}
-      onKeyDown={handleOnKeyDown}
-    />
+    <>
+      <Editable
+        value={block.content}
+        placeholder="Type / for commands"
+        onInput={handleOnInput}
+        onKeyDown={handleOnKeyDown}
+      />
+
+      <Menu />
+    </>
   );
 };
