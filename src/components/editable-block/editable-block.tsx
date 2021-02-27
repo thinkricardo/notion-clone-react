@@ -26,6 +26,10 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({ blockId }) => {
     }
   };
 
+  const handleOptionSelected = (id: string) => {
+    return id;
+  };
+
   return (
     <>
       <Editable
@@ -38,10 +42,18 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({ blockId }) => {
       <Menu isOpen={true}>
         <MenuTitle>Basic blocks</MenuTitle>
 
-        <MenuItem>Text</MenuItem>
-        <MenuItem>Heading 1</MenuItem>
-        <MenuItem>Heading 2</MenuItem>
-        <MenuItem>Heading 3</MenuItem>
+        <MenuItem id="1" onItemSelected={handleOptionSelected}>
+          Text
+        </MenuItem>
+        <MenuItem id="2" onItemSelected={handleOptionSelected}>
+          Heading 1
+        </MenuItem>
+        <MenuItem id="3" onItemSelected={handleOptionSelected}>
+          Heading 2
+        </MenuItem>
+        <MenuItem id="4" onItemSelected={handleOptionSelected}>
+          Heading 3
+        </MenuItem>
       </Menu>
     </>
   );
