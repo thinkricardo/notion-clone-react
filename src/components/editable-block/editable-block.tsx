@@ -4,7 +4,7 @@ import { Block } from '../../models';
 import { useQuarkState } from '../../state';
 import { store } from '../../store';
 
-import { Menu } from '../menu';
+import { Menu, MenuItem, MenuTitle } from '../menu';
 
 import { Editable } from '../../elements/editable';
 
@@ -35,7 +35,14 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({ blockId }) => {
         onKeyDown={handleOnKeyDown}
       />
 
-      <Menu isOpen={true} />
+      <Menu isOpen={true}>
+        <MenuTitle>Basic blocks</MenuTitle>
+
+        <MenuItem>Text</MenuItem>
+        <MenuItem>Heading 1</MenuItem>
+        <MenuItem>Heading 2</MenuItem>
+        <MenuItem>Heading 3</MenuItem>
+      </Menu>
     </>
   );
 };
