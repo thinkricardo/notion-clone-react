@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { MenuTitleWrapper } from './menu-title.styles';
+
 export const MenuTitle: React.FC = ({ children }) => {
-  return <div>{children}</div>;
+  return <MenuTitleWrapper>{children}</MenuTitleWrapper>;
 };
