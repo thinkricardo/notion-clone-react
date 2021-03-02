@@ -4,13 +4,37 @@ import { Block } from '../../models';
 import { useQuarkState } from '../../state';
 import { store } from '../../store';
 
-import { Menu, MenuItem, MenuTitle } from '../menu';
+import { Menu, MenuItemsGroup } from '../menu';
 
 import { Editable } from '../../elements/editable';
 
 type EditableBlockProps = {
   blockId: string;
 };
+
+const menuGroups: MenuItemsGroup[] = [
+  {
+    title: 'Basic blocks',
+    items: [
+      {
+        id: '1',
+        title: 'Text',
+      },
+      {
+        id: '2',
+        title: 'Heading 1',
+      },
+      {
+        id: '3',
+        title: 'Heading 2',
+      },
+      {
+        id: '4',
+        title: 'Heading 3',
+      },
+    ],
+  },
+];
 
 export const EditableBlock: React.FC<EditableBlockProps> = ({ blockId }) => {
   const [block, setBlock] = useQuarkState<Block>(blockId);
@@ -43,22 +67,7 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({ blockId }) => {
       />
 
       {isMenuOpen && (
-        <Menu>
-          <MenuTitle>Basic blocks</MenuTitle>
-
-          <MenuItem id="1" onItemSelected={handleOptionSelected}>
-            Text
-          </MenuItem>
-          <MenuItem id="2" onItemSelected={handleOptionSelected}>
-            Heading 1
-          </MenuItem>
-          <MenuItem id="3" onItemSelected={handleOptionSelected}>
-            Heading 2
-          </MenuItem>
-          <MenuItem id="4" onItemSelected={handleOptionSelected}>
-            Heading 3
-          </MenuItem>
-        </Menu>
+        <Menu groups={menuGroups} onItemSelected={handleOptionSelected} />
       )}
     </>
   );
