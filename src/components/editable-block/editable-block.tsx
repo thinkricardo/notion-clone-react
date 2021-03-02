@@ -1,4 +1,4 @@
-import React, { KeyboardEvent } from 'react';
+import React, { KeyboardEvent, useState } from 'react';
 
 import { Block } from '../../models';
 import { useQuarkState } from '../../state';
@@ -14,6 +14,7 @@ type EditableBlockProps = {
 
 export const EditableBlock: React.FC<EditableBlockProps> = ({ blockId }) => {
   const [block, setBlock] = useQuarkState<Block>(blockId);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleOnInput = (value: string) => {
     setBlock({ ...block, content: value });
@@ -23,6 +24,8 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({ blockId }) => {
     if (evt.key === 'Enter' && !evt.shiftKey) {
       evt.preventDefault();
       store.addBlock(block);
+    } else if (evt.key === '/') {
+      setIsMenuOpen(true);
     }
   };
 
@@ -39,22 +42,24 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({ blockId }) => {
         onKeyDown={handleOnKeyDown}
       />
 
-      <Menu isOpen={true}>
-        <MenuTitle>Basic blocks</MenuTitle>
+      {isMenuOpen && (
+        <Menu>
+          <MenuTitle>Basic blocks</MenuTitle>
 
-        <MenuItem id="1" onItemSelected={handleOptionSelected}>
-          Text
-        </MenuItem>
-        <MenuItem id="2" onItemSelected={handleOptionSelected}>
-          Heading 1
-        </MenuItem>
-        <MenuItem id="3" onItemSelected={handleOptionSelected}>
-          Heading 2
-        </MenuItem>
-        <MenuItem id="4" onItemSelected={handleOptionSelected}>
-          Heading 3
-        </MenuItem>
-      </Menu>
+          <MenuItem id="1" onItemSelected={handleOptionSelected}>
+            Text
+          </MenuItem>
+          <MenuItem id="2" onItemSelected={handleOptionSelected}>
+            Heading 1
+          </MenuItem>
+          <MenuItem id="3" onItemSelected={handleOptionSelected}>
+            Heading 2
+          </MenuItem>
+          <MenuItem id="4" onItemSelected={handleOptionSelected}>
+            Heading 3
+          </MenuItem>
+        </Menu>
+      )}
     </>
   );
 };

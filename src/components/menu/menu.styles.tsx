@@ -1,11 +1,6 @@
 import styled from 'styled-components';
 
-type MenuWrapperProps = {
-  isVisible: boolean;
-};
-
-export const MenuWrapper = styled.div<MenuWrapperProps>`
-  display: ${(props) => (props.isVisible ? 'block' : 'none')};
+export const MenuWrapper = styled.div`
   width: 180px;
   padding: 8px 12px;
   color: rgb(55, 53, 47);
