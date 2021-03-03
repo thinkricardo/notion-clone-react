@@ -1,12 +1,12 @@
-import { Block } from '../models';
+import { Block, BlockType } from '../models';
 import { quark } from '../state';
 
-import { defaultBlock } from './defaults';
+import { blockTypes, defaultBlock } from './defaults';
 
 class Store {
   private blockIds = quark<string[]>('blockIds', []);
 
-  private getBlockIndex(blockId: string) {
+  private getBlockIndex(blockId: string): number {
     return this.blockIds
       .get()
       .findIndex((innerBlockId) => innerBlockId === blockId);
@@ -33,6 +33,10 @@ class Store {
 
     this.blockIds.set(newBlockIds);
     quark<Block>(newBlock.id, newBlock);
+  }
+
+  getBlockTypes(): BlockType[] {
+    return blockTypes;
   }
 }
 

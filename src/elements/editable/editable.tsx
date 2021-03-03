@@ -104,7 +104,7 @@ export class Editable extends React.Component<EditableProps> {
     const { value, placeholder } = this.props;
 
     return (
-      <EditableWrapper showPlaceholder={!value}>
+      <EditableWrapper hasPlaceholder={!value}>
         <div
           ref={this.elementRef}
           contentEditable={true}

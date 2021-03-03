@@ -2,13 +2,12 @@ import React from 'react';
 
 import { EditablePage } from '../../components/editable-page';
 
-import './app.scss';
+import { AppWrapper } from './app.styles';
 
 export const App: React.FC = () => {
   return (
-    <>
-      <h1>Notion Clone React</h1>
+    <AppWrapper>
       <EditablePage />
-    </>
+    </AppWrapper>
   );
 };

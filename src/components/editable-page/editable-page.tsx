@@ -5,6 +5,8 @@ import { store } from '../../store';
 
 import { EditableBlock } from '../editable-block';
 
+import { EditablePageWrapper } from './editable-page.styles';
+
 export const EditablePage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const blockIds = useQuarkValue<string[]>('blockIds');
@@ -17,12 +19,12 @@ export const EditablePage: React.FC = () => {
   }, [isLoading]);
 
   return (
-    <>
+    <EditablePageWrapper>
       <h2>Page</h2>
 
       {blockIds.map((blockId) => {
         return <EditableBlock key={blockId} blockId={blockId} />;
       })}
-    </>
+    </EditablePageWrapper>
   );
 };
