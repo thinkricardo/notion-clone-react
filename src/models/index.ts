@@ -1,2 +1,2 @@
-export { Block } from './block';
+export { Block, BlockType } from './block';
 export { MenuItem, MenuItemsGroup } from './menu';
