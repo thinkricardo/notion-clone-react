@@ -54,6 +54,8 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({ blockId }) => {
   };
 
   const handleOptionSelected = (id: string) => {
+    setIsMenuOpen(false);
+
     return id;
   };
 
