@@ -12,33 +12,29 @@ type EditableBlockProps = {
   blockId: string;
 };
 
-const menuGroups: MenuItemsGroup[] = [
-  {
-    title: 'Basic blocks',
-    items: [
-      {
-        id: '1',
-        title: 'Text',
-      },
-      {
-        id: '2',
-        title: 'Heading 1',
-      },
-      {
-        id: '3',
-        title: 'Heading 2',
-      },
-      {
-        id: '4',
-        title: 'Heading 3',
-      },
-    ],
-  },
-];
-
 export const EditableBlock: React.FC<EditableBlockProps> = ({ blockId }) => {
   const [block, setBlock] = useQuarkState<Block>(blockId);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const buildMenuItems = (): MenuItemsGroup[] => {
+    const menuGroups: MenuItemsGroup[] = [];
+
+    const basicBlocks: MenuItemsGroup = {
+      title: 'Basic blocks',
+      items: [],
+    };
+
+    store.getBlockTypes().map((blockType) => {
+      basicBlocks.items.push({
+        id: blockType.id,
+        title: blockType.name,
+      });
+    });
+
+    menuGroups.push(basicBlocks);
+
+    return menuGroups;
+  };
 
   const handleOnInput = (value: string) => {
     setBlock({ ...block, content: value });
@@ -69,7 +65,7 @@ export const EditableBlock: React.FC<EditableBlockProps> = ({ blockId }) => {
       />
 
       {isMenuOpen && (
-        <Menu groups={menuGroups} onItemSelected={handleOptionSelected} />
+        <Menu groups={buildMenuItems()} onItemSelected={handleOptionSelected} />
       )}
     </>
   );
