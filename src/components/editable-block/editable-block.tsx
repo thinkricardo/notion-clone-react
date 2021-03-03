@@ -1,10 +1,10 @@
 import React, { KeyboardEvent, useState } from 'react';
 
-import { Block } from '../../models';
+import { Block, MenuItemsGroup } from '../../models';
 import { useQuarkState } from '../../state';
 import { store } from '../../store';
 
-import { Menu, MenuItemsGroup } from '../menu';
+import { Menu } from '../menu';
 
 import { Editable } from '../../elements/editable';
 

@@ -1,11 +1,11 @@
 import React from 'react';
 
+import { MenuItemsGroup } from '../../models/menu';
+
 import { MenuItem } from './menu-item';
 import { MenuTitle } from './menu-title';
 
 import { MenuWrapper } from './menu.styles';
-
-import { MenuItemsGroup } from './menu.model';
 
 type MenuProps = {
   groups: MenuItemsGroup[];
